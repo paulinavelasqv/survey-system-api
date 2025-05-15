@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resultados en Tiempo Real</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      max-width: 600px;
+      width: 100%;
+      margin-top: 40px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #444;
+      font-size: 1.3em;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background: #f9f9f9;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      border-left: 6px solid #007bff;
+      border-radius: 6px;
+      font-size: 1.1em;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .votes {
+      font-weight: bold;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Resultados en Tiempo Real</h1>
+    <h2 id="survey-title">Cargando encuesta...</h2>
+    <ul id="options-list"></ul>
+  </div>
+
+  <script>
+    const socket = io("http://localhost:8080"); // Cambia el puerto si es necesario
+    const surveyId = "6826482e3a7dc3ba767c05a1"; // Cambia por el _id real de la encuesta
+
+    socket.on(`surveyUpdated:${surveyId}`, (updatedSurvey) => {
+      document.getElementById('survey-title').textContent = updatedSurvey.title;
+
+      const list = document.getElementById('options-list');
+      list.innerHTML = ''; // Limpiar lista anterior
+
+      updatedSurvey.options.forEach(opt => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${opt.text}</span>
+          <span class="votes">${opt.votes} votos</span>
+        `;
+        list.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
