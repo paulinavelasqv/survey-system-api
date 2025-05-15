@@ -10,7 +10,7 @@ API RESTful para gestionar encuestas donde los usuarios pueden votar una sola ve
 - Express.js
 - MongoDB con Mongoose
 - WebSockets (Socket.IO)
-- JWT para autenticación (si aplica)
+- JWT para autenticación
 
 ---
 
@@ -20,7 +20,7 @@ API RESTful para gestionar encuestas donde los usuarios pueden votar una sola ve
 - Los usuarios pueden votar solo una vez por encuesta.
 - Resultados en tiempo real mediante WebSockets.
 - Endpoints para obtener encuestas, votar y ver resultados.
-- Autenticación básica (si está implementada).
+- Autenticación básica.
 
 ---
 
